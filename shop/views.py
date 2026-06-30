@@ -3,8 +3,9 @@ from .models import Product, Category
 from django.contrib.auth.decorators import (
     login_required, permission_required, user_passes_test)
 from .forms import CategoryForm, ProductForm
-
-
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 def create_category(request):
     if request.method == 'POST':
@@ -77,4 +78,39 @@ def update_product(request, pk):
 
 
 
+
+
+
+
+class ProductListView(ListView):
+    model = Product
+    
+
+class ProductDetailView(DetailView):
+    model = Product
+    
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields =['title', 'price', 'quantity', 'description', 'category']
+
+    success_url = reverse_lazy('product_list')
+
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin,  UpdateView):
+    model = Product
+    fields = ['title', 'price']
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    success_url = reverse_lazy('product_list')
+    permission_required = 'shop.change_product'
+    
+
+   
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    template_name = 'shop/delete.html'
+    success_url = reverse_lazy('product_list')
 

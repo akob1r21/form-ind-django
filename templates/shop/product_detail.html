@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>{{object.title}}</h1>
+    
+    <p><strong>title</strong> {{object.title}}</p>
+    <p><strong>price</strong> {{object.price}}</p>
+    <p><strong>category</strong> {{object.category}}</p>
+    <p><strong>quantity</strong> {{object.quantity}}</p>
+        <p><strong>description</strong> {{object.description}}</p>
+        <p><strong>created_at</strong> {{object.created_at}}</p>
+     
+     <a href="{% url 'update_products' product.id %}">Update</a>
+
+
+{% endblock %}

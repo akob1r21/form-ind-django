@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>Products</h1>
+    
+    {% for product in object_list %}
+    <p><strong>title</strong> {{product.title}}</p>
+    <p><strong>price</strong> {{product.price}}</p>
+        <p><strong>description</strong> {{product.description}}</p>
+        <p><strong>created_at</strong> {{product.created_at}}</p>
+     
+     <a href="{% url 'update_product' product.slug %}">Update</a>
+     <a href="{% url 'delete_product' product.slug %}">delete</a>
+     <a href="{% url 'detail_product' product.id %}">Detail</a>
+    {% empty %}
+        <p>Didnt find any note for u</p>
+    {% endfor %}
+
+{% endblock %}
