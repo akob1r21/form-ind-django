@@ -1,25 +1,40 @@
 {% extends "base.html" %}
 
+{% block title %}Create account - Northline Market{% endblock %}
+
 {% block main %}
-    <h1>Register page</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input required type="text" name="username"> <br>
+    <section class="auth-page container">
+        <div class="auth-card">
+            <h1 class="detail-title">Create your account</h1>
+            <p class="detail-description">Join the marketplace tools and start shaping a cleaner storefront.</p>
+            <form class="form-grid" action="" method="post">
+                {% csrf_token %}
+                <p>
+                    <label for="username">Username</label>
+                    <input id="username" required type="text" name="username" autocomplete="username">
+                </p>
 
-        <label for="email">Enter ur Email</label>
-        <input required type="email" name="email"> <br>
+                <p>
+                    <label for="email">Email</label>
+                    <input id="email" required type="email" name="email" autocomplete="email">
+                </p>
 
+                <p>
+                    <label for="password1">Password</label>
+                    <input id="password1" required type="password" name="password1" autocomplete="new-password">
+                </p>
 
-        <label for="password1">Enter ur password</label>
-        <input required type="password" name="password1"> <br>
+                <p>
+                    <label for="password2">Confirm password</label>
+                    <input id="password2" required type="password" name="password2" autocomplete="new-password">
+                </p>
 
-        <label for="password2">Confirm ur password</label>
-        <input required type="password" name="password2"> <br>
+                <button class="button-primary" type="submit">Create account</button>
+            </form>
 
-        <button type="submit">Register</button>
-
-
-    </form>
-    <p style="color: red;">{{error}}</p>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}

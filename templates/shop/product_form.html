@@ -1,11 +1,28 @@
 {% extends "base.html" %}
 
+{% block title %}Product Form - Northline Market{% endblock %}
 
 {% block main %}
-    <h1>{{title}}</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Save</button>
-    </form>
+    <section class="form-wrap">
+        <div class="form-card">
+            <h1>{{ title|default:"Product details" }}</h1>
+            <p>Keep the listing direct, useful, and easy for shoppers to scan.</p>
+            <form class="form-grid" action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                            <span class="field-help">{{ field.help_text }}</span>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                <button class="button-primary" type="submit">Save product</button>
+            </form>
+        </div>
+    </section>
 {% endblock main %}

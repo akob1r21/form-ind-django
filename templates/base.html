@@ -1,35 +1,55 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{% block title %}Northline Market{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
 </head>
 <body>
-    <header>
-        {% if request.user.is_authenticated %}
-            <p><strong>Welcome:</strong>{{request.user.username}}</p> 
-            <p>Dont u have account <a href="{% url 'logout' %}">Logout</a></p> 
-            <form action="" method="get">
-                <label for="ai_help">Ask ai for help</label>
-                <input type="text" name="ai_help" placeholder="Ask ur question">
-                <button type="submit">Ask</button>
-            </form>
-            
-        {% else %}
-            <p>Do u have account <a href="{% url 'login' %}">Sign in</a></p> 
-            <p>Dont u have account <a href="{% url 'register' %}">Sign up</a></p> 
-        {% endif %}
+    <div class="site-shell">
+        <header class="site-header">
+            <nav class="nav container" aria-label="Main navigation">
+                <a class="brand" href="{% url 'product_list' %}">
+                    <span class="brand-mark">N</span>
+                    <span>Northline Market</span>
+                </a>
 
-    </header>
+                <div class="nav-links">
+                    <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                    <a class="nav-link" href="{% url 'create_product' %}">Sell</a>
+                    <a class="nav-link" href="{% url 'create_category' %}">Categories</a>
+                </div>
 
-    {% block main %}
-        <p>Default main.... </p>
-    {% endblock %}
+                <div class="nav-actions">
+                    {% if request.user.is_authenticated %}
+                        <span class="nav-link">Hi, {{ request.user.username }}</span>
+                        <a class="button button-muted" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a class="button button-muted" href="{% url 'login' %}">Sign in</a>
+                        <a class="button button-primary" href="{% url 'register' %}">Create account</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
 
-
-    <footer>
-        <p>Notes app</p>
-    </footer>
+        <main class="main">
+            {% block main %}
+                <section class="container section">
+                    <h1 class="page-title">Northline Market</h1>
+                    <p class="hero-copy">A polished place to browse and manage products.</p>
+                </section>
+            {% endblock %}
+        </main>
+    
+        <footer class="site-footer">
+            <div class="footer-inner container">
+                <strong>Northline Market</strong>
+                <span>Curated products, clean tools, calmer selling.</span>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

@@ -1,13 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Page not found - Northline Market</title>
+    <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
 </head>
 <body>
-    <h1 style="color: red; text-align: center;">
-        Page not Found
-    </h1>
+    <main class="auth-page container">
+        <section class="empty-state">
+            <h1 class="detail-title">Page not found</h1>
+            <p>That page is not available. Head back to the catalog and keep browsing.</p>
+            <a class="button button-primary" href="{% url 'product_list' %}">View products</a>
+        </section>
+    </main>
 </body>
 </html>

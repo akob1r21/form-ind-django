@@ -13,14 +13,14 @@ def register_view(request):
         password2 = request.POST.get('password2')
 
         if not username or not email or not password1:
-            return render(request, 'accounts/register.html', {'error':'All fields are necessery'})
+            return render(request, 'accounts/register.html', {'error':'All fields are necessary.'})
 
         if password1!=password2:
-            return render(request, 'accounts/register.html', {'error':'Passwords doesnt match'})
+            return render(request, 'accounts/register.html', {'error':'Passwords do not match.'})
         elif User.objects.filter(username=username).exists():
-            return render(request, 'accounts/register.html', {'error':'Username already exists'})
+            return render(request, 'accounts/register.html', {'error':'Username already exists.'})
         elif User.objects.filter(email=email).exists():
-            return render(request, 'accounts/register.html', {'error':'Email already exists'})
+            return render(request, 'accounts/register.html', {'error':'Email already exists.'})
 
         User.objects.create_user(
             username=username,
@@ -44,7 +44,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
 
         if not user:
-            return render(request, 'accounts/login.html', {'error':'Password or Usernames is not correct!'})
+            return render(request, 'accounts/login.html', {'error':'Username or password is not correct.'})
 
         login(request, user=user) 
         return redirect('products')
@@ -56,5 +56,4 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
-
 

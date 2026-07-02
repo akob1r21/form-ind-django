@@ -1,19 +1,74 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Products - Northline Market{% endblock %}
 
 {% block main %}
-    <h1>Products</h1>
-    
-    {% for product in object_list %}
-    <p><strong>title</strong> {{product.title}}</p>
-    <p><strong>price</strong> {{product.price}}</p>
-        <p><strong>description</strong> {{product.description}}</p>
-        <p><strong>created_at</strong> {{product.created_at}}</p>
-     
-     <a href="{% url 'update_product' product.slug %}">Update</a>
-     <a href="{% url 'delete_product' product.slug %}">delete</a>
-     <a href="{% url 'detail_product' product.id %}">Detail</a>
-    {% empty %}
-        <p>Didnt find any note for u</p>
-    {% endfor %}
+    <section class="hero container">
+        <div>
+            <p class="eyebrow">Curated storefront</p>
+            <h1>Products that feel easy to choose.</h1>
+            <p class="hero-copy">Browse the catalog, review inventory, and keep every listing sharp from one calm workspace.</p>
+            <div class="action-row" style="margin-top: 28px;">
+                <a class="button button-primary" href="{% url 'create_product' %}">Add product</a>
+                <a class="button" href="{% url 'create_category' %}">New category</a>
+            </div>
+        </div>
+        <div class="hero-media">
+            <img class="hero-image" src="{% static 'img/market-hero.png' %}" alt="Curated products arranged on a modern retail table">
+            <div class="hero-panel">
+                <strong>{{ object_list|length }}</strong>
+                <span>active listings ready to browse</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-compact container">
+        <div class="section-head">
+            <h2>Latest Products</h2>
+            <p>Clear cards, quick actions, and the important product details first.</p>
+        </div>
+
+        <div class="product-grid">
+            {% for product in object_list %}
+                <article class="product-card">
+                    <div>
+                        <div class="product-topline">
+                            {{ product.category|default:"Uncategorized" }}
+                        </div>
+                        <h2>{{ product.title }}</h2>
+                        <p class="product-description">{{ product.description|default:"No description has been added yet."|truncatewords:22 }}</p>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">${{ product.price }}</span>
+                            <span class="stock">{{ product.quantity|default:"0" }} in stock</span>
+                        </div>
+                        <div class="action-row" style="margin-top: 18px;">
+                            <a class="button button-primary" href="{% url 'detail_product' product.id %}">View</a>
+                            <a class="button" href="{% url 'update_product' product.slug %}">Edit</a>
+                            <a class="button button-danger" href="{% url 'delete_product' product.slug %}">Delete</a>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <h2>No products yet</h2>
+                    <p>Create your first listing and this page will become a polished storefront.</p>
+                    <a class="button button-primary" href="{% url 'create_product' %}">Add product</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section container">
+        <div class="feature-band">
+            <div class="feature-copy">
+                <h2>Built for small catalogs that still deserve taste.</h2>
+                <p>Every action stays close to the product, so sellers can edit, delete, and inspect listings without hunting through admin pages.</p>
+            </div>
+            <img class="feature-image" src="{% static 'img/market-grid.png' %}" alt="Overhead product arrangement on modular shelves">
+        </div>
+    </section>
 
 {% endblock %}

@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
+{% block title %}Delete product - Northline Market{% endblock %}
 
 {% block main %}
-    <h1>{{title}}</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        do u want to delete this {{object}}
-        <button type="submit">delete</button>
-    </form>
+    <section class="form-wrap">
+        <div class="form-card delete-card">
+            <h1>Delete {{ object }}</h1>
+            <p>This will remove the listing from the active catalog.</p>
+            <form class="form-grid" action="" method="post">
+                {% csrf_token %}
+                <button class="button-danger" type="submit">Delete product</button>
+                <a class="button" href="{% url 'product_list' %}">Keep product</a>
+            </form>
+        </div>
+    </section>
 {% endblock main %}

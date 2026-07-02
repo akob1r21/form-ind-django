@@ -1,22 +1,31 @@
 {% extends "base.html" %}
 
+{% block title %}Sign in - Northline Market{% endblock %}
+
 {% block main %}
-    <h1>Login page</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input required type="text" name="username" placeholder="Email or usernmae"> <br>
+    <section class="auth-page container">
+        <div class="auth-card">
+            <h1 class="detail-title">Welcome back</h1>
+            <p class="detail-description">Sign in to manage the catalog and keep your products looking sharp.</p>
+            <form class="form-grid" action="" method="post">
+                {% csrf_token %}
+                <p>
+                    <label for="username">Username</label>
+                    <input id="username" required type="text" name="username" autocomplete="username" placeholder="Your username">
+                </p>
 
-        <label for="password">Enter ur password</label>
-        <input required type="text" name="password"> <br>
+                <p>
+                    <label for="password">Password</label>
+                    <input id="password" required type="password" name="password" autocomplete="current-password">
+                </p>
 
+                <button class="button-primary" type="submit">Sign in</button>
+            </form>
 
-        <button type="submit">Login</button>
-
-
-    </form>
-    
-    
-        <p style="color: red;">{{error}}</p>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+        </div>
+    </section>
 
 {% endblock %}

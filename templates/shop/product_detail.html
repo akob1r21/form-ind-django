@@ -1,16 +1,40 @@
 {% extends "base.html" %}
 
-{% block main %}
-    <h1>{{object.title}}</h1>
-    
-    <p><strong>title</strong> {{object.title}}</p>
-    <p><strong>price</strong> {{object.price}}</p>
-    <p><strong>category</strong> {{object.category}}</p>
-    <p><strong>quantity</strong> {{object.quantity}}</p>
-        <p><strong>description</strong> {{object.description}}</p>
-        <p><strong>created_at</strong> {{object.created_at}}</p>
-     
-     <a href="{% url 'update_products' product.id %}">Update</a>
+{% block title %}{{ object.title }} - Northline Market{% endblock %}
 
+{% block main %}
+    <section class="detail-layout container">
+        <div class="detail-art" aria-hidden="true"></div>
+        <article>
+            <p class="eyebrow">{{ object.category|default:"Product" }}</p>
+            <h1 class="detail-title">{{ object.title }}</h1>
+            <p class="detail-description">{{ object.description|default:"This product is ready for a stronger description." }}</p>
+
+            <dl class="meta-grid">
+                <div class="meta-item">
+                    <dt>Price</dt>
+                    <dd>${{ object.price }}</dd>
+                </div>
+                <div class="meta-item">
+                    <dt>Quantity</dt>
+                    <dd>{{ object.quantity }}</dd>
+                </div>
+                <div class="meta-item">
+                    <dt>Category</dt>
+                    <dd>{{ object.category }}</dd>
+                </div>
+                <div class="meta-item">
+                    <dt>Status</dt>
+                    <dd>{% if object.quantity %}In stock{% else %}Out of stock{% endif %}</dd>
+                </div>
+            </dl>
+
+            <div class="action-row">
+                <a class="button button-primary" href="{% url 'update_product' object.slug %}">Edit product</a>
+                <a class="button button-danger" href="{% url 'delete_product' object.slug %}">Delete</a>
+                <a class="button" href="{% url 'product_list' %}">Back to products</a>
+            </div>
+        </article>
+    </section>
 
 {% endblock %}

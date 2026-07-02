@@ -1,19 +1,39 @@
 {% extends "base.html" %}
 
+{% block title %}Products - Northline Market{% endblock %}
+
 {% block main %}
-    <h1>Products</h1>
-    
-    {% for product in products %}
-    <p><strong>title</strong> {{product.title}}</p>
-    <p><strong>price</strong> {{product.price}}</p>
-    <p><strong>category</strong> {{product.category.name}}</p>
-    <p><strong>quantity</strong> {{product.quantity}}</p>
-        <p><strong>description</strong> {{product.description}}</p>
-        <p><strong>created_at</strong> {{product.created_at}}</p>
-     
-     <a href="{% url 'update_products' product.id %}">Update</a>
-    {% empty %}
-        <p>Didnt find any note for u</p>
-    {% endfor %}
+    <section class="section container">
+        <div class="section-head">
+            <h1 class="page-title">Products</h1>
+            <p>Manage products from the classic view.</p>
+        </div>
+
+        <div class="product-grid">
+            {% for product in products %}
+                <article class="product-card">
+                    <div>
+                        <div class="product-topline">{{ product.category.name }}</div>
+                        <h2>{{ product.title }}</h2>
+                        <p class="product-description">{{ product.description|default:"No description yet."|truncatewords:22 }}</p>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">${{ product.price }}</span>
+                            <span class="stock">{{ product.quantity }} in stock</span>
+                        </div>
+                        <div class="action-row" style="margin-top: 18px;">
+                            <a class="button button-primary" href="{% url 'update_products' product.id %}">Edit</a>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <h2>No products found</h2>
+                    <p>Create a product to start filling the catalog.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}

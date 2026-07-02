@@ -11,18 +11,16 @@ def create_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
             Category.objects.create(
                 name = form.cleaned_data['name'],
                 description = form.cleaned_data['description'],
             )
-            print('salom==============')
             return redirect('products')
-        
     else:
         form = CategoryForm()
-        return render(request, 'products/form.html',
-                      {'title':'Create Category','form':form})
+
+    return render(request, 'products/form.html',
+                  {'title':'Create Category','form':form})
 
 
 
@@ -56,8 +54,9 @@ def product_create(request):
             return redirect('products')
     else:
         form = ProductForm()
-        return render(request, 'products/form.html',
-                      {'title':'Create Product','form':form})
+
+    return render(request, 'products/form.html',
+                  {'title':'Create Product','form':form})
 
 def is_seller(user):
     return user.groups.filter(name='Sellers').exists()
@@ -72,8 +71,9 @@ def update_product(request, pk):
             return redirect('products')
     else:
         form = ProductForm(instance=product)
-        return render(request, 'products/form.html',
-                      {'title':'Create Product','form':form})    
+
+    return render(request, 'products/form.html',
+                  {'title':'Update Product','form':form})    
 
 
 
@@ -113,4 +113,3 @@ class ProductDeleteView(DeleteView):
     slug_url_kwarg = 'slug'
     template_name = 'shop/delete.html'
     success_url = reverse_lazy('product_list')
-
